@@ -1,0 +1,184 @@
+/*
+
+Troop - In-browser avatar generator
+Copyright (C) 2014 tombazza
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
+@charset "UTF-8";
+
+/* Reset */
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
+
+html {
+    background-color: #874293;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    padding: 5%;
+    background-color: #874293;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: bold;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    text-align: right;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+#generator {
+    border: 2px solid #6D2979;
+    background-color: #fff;
+    color: #6D2979;
+    padding: 5px;
+    overflow: hidden;
+    height: 191px;
+}
+
+#generator #body {
+    width: 91px;
+    height: 169px;
+    margin-right: 10px;
+    position: relative;
+    background-image: url('../assets/skeleton.gif');
+    background-repeat: no-repeat;
+    float: left;
+}
+
+#generator .button {
+    background: #a364ae;
+    background: -moz-linear-gradient(top, #a364ae 0%, #774380 41%, #6d2979 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #a364ae), color-stop(41%, #774380), color-stop(100%, #6d2979));
+    background: -webkit-linear-gradient(top, #a364ae 0%, #774380 41%, #6d2979 100%);
+    background: -o-linear-gradient(top, #a364ae 0%, #774380 41%, #6d2979 100%);
+    background: -ms-linear-gradient(top, #a364ae 0%, #774380 41%, #6d2979 100%);
+    background: linear-gradient(to bottom, #a364ae 0%, #774380 41%, #6d2979 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a364ae', endColorstr='#6d2979', GradientType=0 );
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 5px;
+    border: 1px solid #774380;
+    cursor: pointer;
+    z-index: 100;
+}
+
+#generator .button:hover {
+    background: #6d2979;
+    background: -moz-linear-gradient(top, #6d2979 0%, #774380 59%, #a364ae 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #6d2979), color-stop(59%, #774380), color-stop(100%, #a364ae));
+    background: -webkit-linear-gradient(top, #6d2979 0%, #774380 59%, #a364ae 100%);
+    background: -o-linear-gradient(top, #6d2979 0%, #774380 59%, #a364ae 100%);
+    background: -ms-linear-gradient(top, #6d2979 0%, #774380 59%, #a364ae 100%);
+    background: linear-gradient(to bottom, #6d2979 0%, #774380 59%, #a364ae 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6d2979', endColorstr='#a364ae', GradientType=0 );
+}
+
+
+#generator #body span {
+    position: absolute;
+    bottom: 0;
+}
+
+#generator #body span.save {
+    right: 0;
+}
+
+#generator #body span.clear {
+    left: 0;
+}
+
+#generator #body .layer {
+    position: absolute;
+    background-repeat: no-repeat;
+}
+#generator #body .layer .item {
+    position: absolute;
+    width: 91px;
+    height: 139px;
+    background-repeat: no-repeat;
+}
+
+#generator #body #layer_body { z-index: 0; }
+#generator #body #layer_hair { z-index: 1; }
+#generator #body #layer_hats { z-index: 2; }
+#generator #body #layer_pants { z-index: 3; }
+#generator #body #layer_bottoms { z-index: 4; }
+#generator #body #layer_tops { z-index: 5; }
+#generator #body #layer_shoes { z-index: 6; }
+#generator #body #layer_extras { z-index: 7; }
+
+#generator #browse {
+    float: left;
+}
+
+#generator ul.tabs {
+    overflow: hidden;
+    height: 22px;
+    padding-left: 101px;
+}
+
+#generator ul.tabs li {
+    float: left;
+    clear: none;
+    height: 20px;
+    padding: 0 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#generator ul.tabs li:hover {
+    border-bottom: 2px solid #6D2979;
+}
+
+#generator ul.tabs li.selected {
+    font-weight: bold;
+}
+
+#generator #viewer {
+    float: left;
+    height: 167px;
+    border: 1px solid #ccc;
+    overflow-x: scroll;
+}
+
+#generator #viewer .section {
+    overflow: hidden;
+    display: none;
+}
+
+#generator #viewer .layer {
+    float: left;
+    margin: 0 5px;
+    height: 139px;
+    width: 91px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+#generator #viewer .selected {
+    border-bottom: 2px solid #6D2979;
+}
